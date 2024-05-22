@@ -1,0 +1,42 @@
+#grapCard-config {
+  width: 100%;
+  height: 989px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(254, 255, 255, 1);
+  overflow: hidden;
+  gap: 84px;
+}
+
+.mainCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 45px;
+}
+
+.card {
+  width: 270px;
+  height: 270px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: space-between;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: rgba(17, 116, 237, 1);
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.footCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
