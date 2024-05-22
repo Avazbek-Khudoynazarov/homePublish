@@ -33,7 +33,7 @@ function App() {
         <GrapCard />
         <Review />
         <Footer />
-        {/* <GrapChat /> */}
+        <GrapChat />
       </Router>
     </div>
   );

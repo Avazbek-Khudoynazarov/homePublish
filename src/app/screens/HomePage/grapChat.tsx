@@ -1,140 +1,168 @@
-import React, { useEffect, useState } from "react";
-import { Button } from "@mui/material";
+import React, { useState } from "react";
+import { Button, styled, Input } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import styled from "@mui/system/styled";
-
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
+import Picker from "@emoji-mart/react";
+import data from "@emoji-mart/data";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function GrapChat() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [isPickerVisible, setIsPickerVisible] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setIsOpen(true);
-    }, 5000);
-    return () => clearTimeout(timeoutId);
-  }, []);
+  const VisuallyHiddenInput = styled("input")({
+    clip: "rect(0 0 0 0)",
+    clipPath: "inset(50%)",
+    height: 1,
+    overflow: "hidden",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    whiteSpace: "nowrap",
+    width: 1,
+  });
 
   const toggleChat = () => {
-    setIsOpen(!isOpen);
+    setOpen(!open);
+  };
+
+  const handleEmojiSelect = (emoji: { native: string }) => {
+    setInputValue((prev) => prev + emoji.native);
+  };
+
+  const variants = {
+    open: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+    closed: { opacity: 0, y: "100%", transition: { duration: 0.5 } },
   };
 
   return (
-    <div>
-      <Button color="primary" onClick={toggleChat} className="chat_button">
-        {isOpen ? (
-          <CloseIcon
-            style={{
-              border: "1px solid yellow",
-              right: "300px",
-              bottom: "615px",
-              position: "fixed",
-            }}
-          />
-        ) : (
-          <img
-            style={{ position: "fixed" }}
-            src="../Icons/grapIcon.png"
-            alt="Open Chat"
-          />
-        )}
-      </Button>
-
-      {isOpen && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <div className="mainChat">
-            <div className="chatLogo">
-              <img className="chatImg" src="../Icons/logo.png" alt="" />
+    <div className="chat-config">
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial="closed"
+            animate="open"
+            exit="closed"
+            variants={variants}
+            className="chat"
+          >
+            <div className="mainIcon">
+              <div className="imgCon">
+                <img
+                  style={{ marginRight: "10%" }}
+                  src="../Icons/logo2.png"
+                  alt=""
+                />
+              </div>
               <img
-                className="chatImg2"
+                style={{
+                  aspectRatio: "1/1",
+                  width: "30px",
+                  height: "30px",
+                  cursor: "pointer",
+                }}
                 src="../Icons/notifications.png"
                 alt=""
               />
-              <img className="chatImg3" src="../Icons/Vector3.png" alt="" />
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-around",
-                marginBottom: "17px",
-              }}
-            >
-              <div
+              <img
                 style={{
-                  width: "90px",
-                  display: "flex",
-                  justifyContent: "center",
+                  aspectRatio: "1/1",
+                  width: "22px",
+                  height: "22px",
+                  marginTop: "3px",
+                  cursor: "pointer",
                 }}
-              >
+                src="../Icons/Vector3.png"
+                alt=""
+              />
+            </div>
+            <div className="mainClose">
+              <div className="closeIcon">
+                <CloseIcon
+                  onClick={toggleChat}
+                  style={{ color: "rgba(255, 255, 255, 1)", fontSize: "28px" }}
+                />
+              </div>
+            </div>
+            <div className="footInput">
+              <div className="addIcon">
                 <Button
+                  style={{ borderRadius: "50%" }}
                   component="label"
+                  tabIndex={-1}
+                  role={undefined}
                   startIcon={
                     <AddRoundedIcon
                       style={{
+                        marginLeft: "14px",
                         fontSize: "40px",
+                        fontWeight: "500",
                         color: "rgba(17, 116, 237, 1)",
-                        marginLeft: "15px",
                       }}
                     />
                   }
                 >
-                  <VisuallyHiddenInput type="file" aria-label="Upload file" />
+                  <VisuallyHiddenInput type="file" />
                 </Button>
               </div>
-              <div className="chatInput" style={{ width: "90%" }}>
-                <input
-                  type="text"
-                  name="message"
+              <div className="mainInput">
+                <Input
+                  className="input"
+                  disableUnderline={true}
                   placeholder="Please Wait ..."
-                  style={{
-                    width: "70%",
-                    height: "48px",
-                    padding: "0 30px",
-                    borderRadius: "50px",
-                    fontSize: "20px",
-                    outline: "none",
-                    border: "none",
-                  }}
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
                 />
-                <div
-                  style={{
-                    width: "120px",
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-around",
-                    alignItems: "center",
-                  }}
-                >
-                  <img src="../Icons/Vector4.png" alt="" />
+                <div className="smileIcon">
+                  <Button
+                    style={{ borderRadius: "50%" }}
+                    onClick={() => setIsPickerVisible(!isPickerVisible)}
+                  >
+                    {isPickerVisible ? (
+                      <CloseIcon style={{ cursor: "pointer" }} />
+                    ) : (
+                      <img
+                        style={{ cursor: "pointer" }}
+                        src="../Icons/Vector4.png"
+                        alt="smile icon"
+                      />
+                    )}
+                  </Button>
                   <img
-                    style={{ marginRight: "10px" }}
+                    style={{
+                      cursor: "pointer",
+                      aspectRatio: "1/1",
+                      width: "10px",
+                      height: "30px",
+                    }}
                     src="../Icons/Vector5.png"
-                    alt=""
+                    alt="option icon"
                   />
                 </div>
+                {isPickerVisible && (
+                  <div className="emoji-picker">
+                    <Picker
+                      data={data}
+                      previewPosition="none"
+                      onEmojiSelect={handleEmojiSelect}
+                    />
+                  </div>
+                )}
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <div className="btnCon">
+        <Button
+          className="btn"
+          style={{ borderRadius: "50%" }}
+          onClick={toggleChat}
+        >
+          <img src="../Icons/grapIcon.png" alt="Chat Icon" />
+        </Button>
+      </div>
     </div>
   );
 }
