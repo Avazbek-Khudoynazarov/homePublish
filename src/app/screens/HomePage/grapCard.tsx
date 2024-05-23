@@ -1,26 +1,40 @@
 import React, { useEffect, useRef } from "react";
 import { Button } from "@mui/material";
-import { useScroll, motion, useTransform } from "framer-motion";
+import { useScroll, motion, useInView } from "framer-motion";
 
+const variants = {
+  initial: {
+    x: -700,
+    y: 100,
+    opacity: 0,
+  },
+  animate: {
+    x: 0,
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1.5,
+      staggerChildren: 0.1,
+    },
+  },
+};
 export function GrapCard() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["0 1", "1.33 1"],
-  });
-  const scaleProgess = useTransform(scrollYProgress, [0, 1], [0.7, 1]);
-  const opacityProgress = useTransform(scrollYProgress, [0, 1], [0.6, 1]);
+  const ref = useRef<HTMLDivElement | null>(null);
+  const isInView = useInView(ref, { margin: "-200px" });
 
   return (
-    <div id={"grapCard-config"}>
+    <motion.div
+      id={"grapCard-config"}
+      variants={variants}
+      initial="initial"
+      // whileInView="animate"
+      ref={ref}
+      animate={isInView && "animate"}
+    >
       <span style={{ fontSize: "60px", fontWeight: "600", marginTop: "206px" }}>
         그래피툰의 어떤 서비스를 원하시나요?
       </span>
-      <motion.div
-        ref={ref}
-        style={{ scale: scaleProgess, opacity: opacityProgress }}
-        className={" mainCard"}
-      >
+      <motion.div className={" mainCard"} variants={variants}>
         <div className={"card"}>
           <img
             style={{
@@ -114,7 +128,7 @@ export function GrapCard() {
           </span>
         </div>
       </motion.div>
-      <div className={"footCard"}>
+      <motion.div className={"footCard"} variants={variants}>
         <span style={{ fontSize: "30px", fontWeight: "400" }}>
           간단한 폼 작성을 통해 문의 할 수 있습니다.{" "}
         </span>
@@ -134,7 +148,7 @@ export function GrapCard() {
         >
           문의하기
         </Button>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

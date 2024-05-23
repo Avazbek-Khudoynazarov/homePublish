@@ -1,10 +1,45 @@
 import React, { useEffect, useRef } from "react";
 import { Button } from "@mui/material";
-import { useScroll, motion, useTransform } from "framer-motion";
+import { useScroll, motion, useTransform, useInView } from "framer-motion";
+
+const variants = {
+  initial: {
+    x: -700,
+    opacity: 0,
+  },
+  animate: {
+    x: 0,
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1,
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const variant = {
+  initial: {
+    x: 700,
+    opacity: 0,
+  },
+  animate: {
+    x: 0,
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1.5,
+      staggerChildren: 0.1,
+    },
+  },
+};
 
 export function EduTain() {
   const ref = useRef<HTMLDivElement>(null);
   const ref2 = useRef<HTMLDivElement>(null);
+
+  const textRef = useRef<HTMLDivElement | null>(null);
+  const isInView = useInView(ref, { margin: "-150px" });
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -23,7 +58,13 @@ export function EduTain() {
   return (
     <div id={"edu-config"}>
       <div className={"edu1"}>
-        <div className={"eduTitle"}>
+        <motion.div
+          variants={variants}
+          initial="initial"
+          ref={textRef}
+          animate={isInView && "animate"}
+          className={"eduTitle"}
+        >
           <span style={{ fontSize: "55px", fontWeight: "600" }}>
             에듀테인먼트 프로그램
           </span>
@@ -48,7 +89,7 @@ export function EduTain() {
           >
             자세히 보기
           </Button>
-        </div>
+        </motion.div>
         <motion.div
           ref={ref}
           style={{
@@ -69,7 +110,13 @@ export function EduTain() {
         >
           <img src="../Icons/Group.png" alt="" />
         </motion.div>
-        <div className={"eduTitle"}>
+        <motion.div
+          variants={variant}
+          initial="initial"
+          ref={textRef}
+          animate={isInView && "animate"}
+          className={"eduTitle"}
+        >
           <span style={{ fontSize: "55px", fontWeight: "600" }}>
             다양한 콘텐츠 제작
           </span>
@@ -94,7 +141,7 @@ export function EduTain() {
           >
             바로 시작하기
           </Button>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

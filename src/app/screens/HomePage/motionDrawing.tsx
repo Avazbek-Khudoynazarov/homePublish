@@ -1,20 +1,77 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Button } from "@mui/material";
+import { useScroll, motion, useTransform, useInView } from "framer-motion";
+
+const variant = {
+  initial: {
+    x: 700,
+    opacity: 0,
+  },
+  animate: {
+    x: 0,
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1.5,
+      staggerChildren: 0.1,
+    },
+  },
+};
 
 export function MotionDrawing() {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const textRef = useRef<HTMLDivElement | null>(null);
+  const isInView = useInView(ref, { margin: "-150px" });
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["0 1", "1.33 1"],
+  });
+
+  const scaleProgess = useTransform(scrollYProgress, [0, 1], [0.7, 1]);
+  const opacityProgress = useTransform(scrollYProgress, [0, 1], [0.6, 1]);
+
   return (
     <div id={"motion-config"}>
-      <div className={"motion1"}>
-        <div style={{ display: "flex", justifyContent: "center" }}>
+      <motion.div
+        ref={ref}
+        style={{
+          scale: scaleProgess,
+          opacity: opacityProgress,
+        }}
+        className={"motion1"}
+      >
+        <motion.div
+          ref={ref}
+          style={{
+            scale: scaleProgess,
+            opacity: opacityProgress,
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
           <img style={{ width: "80%" }} src="../Icons/Group2.png" alt="" />
-        </div>
+        </motion.div>
         <div className={"drawing"}>
-          <div>
+          <motion.div
+            ref={ref}
+            style={{
+              scale: scaleProgess,
+              opacity: opacityProgress,
+            }}
+          >
             <img src="../Icons/Group3.png" alt="" />
-          </div>
+          </motion.div>
         </div>
-      </div>
-      <div className={"motion2"}>
+      </motion.div>
+      <motion.div
+        variants={variant}
+        initial="initial"
+        ref={textRef}
+        animate={isInView && "animate"}
+        className={"motion2"}
+      >
         <span style={{ fontSize: "60px", fontWeight: "600" }}>
           Motion Drawing
         </span>
@@ -38,7 +95,7 @@ export function MotionDrawing() {
         >
           바로 시작하기
         </Button>
-      </div>
+      </motion.div>
     </div>
   );
 }

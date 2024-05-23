@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { HashLink as Link } from "react-router-hash-link";
 import { Button } from "@mui/material";
 import { gsap, Power3 } from "gsap";
+import { motion } from "framer-motion";
 
 export function NavbarHome() {
   const [navLinkSize, setNavLinkSize] = useState("10rem");
@@ -56,9 +57,28 @@ export function NavbarHome() {
     setActiveLink(href);
   };
 
+  const textVariants = {
+    initial: {
+      x: -700,
+      opacity: 0,
+    },
+
+    animate: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        duration: 1,
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const MotionButton = motion(Button);
+
   return (
     <div id="nav-config">
-      <span
+      <motion.span
+        variants={textVariants}
         style={{
           position: "absolute",
           color: "black",
@@ -66,13 +86,22 @@ export function NavbarHome() {
           fontWeight: "600",
           marginBottom: "250px",
         }}
+        initial="initial"
+        animate="animate"
       >
         애니메이션 스토리텔링 콘텐츠 제작
-      </span>
-      <span style={{ position: "absolute", color: "black", fontSize: "40px" }}>
+      </motion.span>
+      <motion.span
+        variants={textVariants}
+        style={{ position: "absolute", color: "black", fontSize: "40px" }}
+        initial="initial"
+        animate="animate"
+      >
         내가 그린 그림이 움직이는 마법의 캔버스!
-      </span>
-      <Button
+      </motion.span>
+
+      <motion.button
+        className={"btn-head"}
         style={{
           position: "absolute",
           width: "292px",
@@ -81,11 +110,16 @@ export function NavbarHome() {
           fontSize: "28px",
           marginTop: "270px",
           zIndex: "999",
-          background: "rgba(16, 157, 225, 1)",
+          border: "none",
+          borderRadius: "5px",
+          cursor: "pointer",
         }}
+        variants={textVariants}
+        initial="initial"
+        animate="animate"
       >
         그래피툰 만들기
-      </Button>
+      </motion.button>
       <div className={"main-nav"}>
         <div className={"Navlink"} ref={navLinkRef}>
           <Link

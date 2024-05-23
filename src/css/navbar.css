@@ -21,6 +21,14 @@
   bottom: 92%;
 }
 
+.btn-head {
+  background: linear-gradient(
+    to right,
+    rgba(16, 157, 225, 1),
+    rgba(193, 0, 255, 1)
+  );
+}
+
 .Navlink {
   display: flex;
   flex-direction: row;
