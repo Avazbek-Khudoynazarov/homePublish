@@ -1,10 +1,52 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Button } from "@mui/material";
+import { motion, useInView } from "framer-motion";
+
+const variants = {
+  initial: {
+    x: -700,
+    opacity: 0,
+  },
+  animate: {
+    x: 0,
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1,
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const variant = {
+  initial: {
+    x: 700,
+    opacity: 0,
+  },
+  animate: {
+    x: 0,
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1.5,
+      staggerChildren: 0.1,
+    },
+  },
+};
 
 export function MotionCharacter() {
+  const textRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(textRef, { margin: "-150px" });
+
   return (
     <div id={"character-config"}>
-      <div className={"character1"}>
+      <motion.div
+        variants={variants}
+        initial="initial"
+        ref={textRef}
+        animate={isInView && "animate"}
+        className={"character1"}
+      >
         <div
           style={{
             display: "flex",
@@ -217,8 +259,14 @@ export function MotionCharacter() {
             수 있습니다.
           </span>
         </div>
-      </div>
-      <div className={"motion2"}>
+      </motion.div>
+      <motion.div
+        variants={variant}
+        initial="initial"
+        ref={textRef}
+        animate={isInView && "animate"}
+        className={"motion2"}
+      >
         <span style={{ fontSize: "60px", fontWeight: "600" }}>
           Motion Character
         </span>
@@ -242,7 +290,7 @@ export function MotionCharacter() {
         >
           모션 캐릭터 문의
         </Button>
-      </div>
+      </motion.div>
     </div>
   );
 }
