@@ -1,9 +1,54 @@
-import React from "react";
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+
+const variant = {
+  initial: {
+    x: -500,
+    opacity: 0,
+  },
+  animate: {
+    x: 0,
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1.5,
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const variants = {
+  initial: {
+    x: 500,
+    opacity: 0,
+  },
+  animate: {
+    x: 0,
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1.5,
+      staggerChildren: 0.1,
+    },
+  },
+};
 
 export function Graphytoon() {
+  const textRef = useRef<HTMLDivElement | null>(null);
+  const isInView = useInView(textRef, { margin: "-150px", once: true });
+
+  const textRef2 = useRef<HTMLDivElement | null>(null);
+  const isInView2 = useInView(textRef2, { margin: "-150px", once: true });
+
   return (
     <div className={"grap-config"}>
-      <div className={"grapBox"}>
+      <motion.div
+        initial="initial"
+        ref={textRef}
+        animate={isInView ? "animate" : "initial"}
+        variants={variant}
+        className={"grapBox"}
+      >
         <div
           style={{
             display: "flex",
@@ -82,12 +127,18 @@ export function Graphytoon() {
             </span>
           </div>
         </div>
-      </div>
-      <div className={"grapBox2"}>
+      </motion.div>
+      <motion.div
+        initial="initial"
+        ref={textRef2}
+        animate={isInView2 ? "animate" : "initial"}
+        variants={variants}
+        className={"grapBox2"}
+      >
         <div
           style={{
             width: "90%",
-            height: "583px",
+            height: "700px",
           }}
         >
           <video
@@ -102,7 +153,7 @@ export function Graphytoon() {
             muted
           />
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

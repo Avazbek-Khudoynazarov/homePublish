@@ -38,8 +38,8 @@ export function EduTain() {
   const ref = useRef<HTMLDivElement>(null);
   const ref2 = useRef<HTMLDivElement>(null);
 
-  const textRef = useRef<HTMLDivElement | null>(null);
-  const isInView = useInView(ref, { margin: "-150px" });
+  const textRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { margin: "-100px" });
 
   const { scrollYProgress } = useScroll({
     target: ref,

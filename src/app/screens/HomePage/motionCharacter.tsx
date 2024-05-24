@@ -1,26 +1,10 @@
 import React, { useRef } from "react";
 import { Button } from "@mui/material";
-import { motion, useInView } from "framer-motion";
+import { useScroll, motion, useTransform, useInView } from "framer-motion";
 
 const variants = {
   initial: {
-    x: -700,
-    opacity: 0,
-  },
-  animate: {
-    x: 0,
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 1,
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const variant = {
-  initial: {
-    x: 700,
+    y: -700,
     opacity: 0,
   },
   animate: {
@@ -35,8 +19,18 @@ const variant = {
 };
 
 export function MotionCharacter() {
-  const textRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
+
+  const textRef = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(textRef, { margin: "-150px" });
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["0 1", "1.33 1"],
+  });
+
+  const scaleProgess = useTransform(scrollYProgress, [0, 1], [0.7, 1]);
+  const opacityProgress = useTransform(scrollYProgress, [0, 1], [0.6, 1]);
 
   return (
     <div id={"character-config"}>
@@ -45,6 +39,38 @@ export function MotionCharacter() {
         initial="initial"
         ref={textRef}
         animate={isInView && "animate"}
+        className={"motion2"}
+      >
+        <span style={{ fontSize: "60px", fontWeight: "600" }}>
+          Motion Character
+        </span>
+        <span style={{ fontSize: "30px", fontWeight: "600" }}>
+          내 캐릭터가 살아 움직인다?!
+        </span>
+        <span style={{ width: "90%", fontSize: "25px", fontWeight: "500" }}>
+          개발된 캐릭터 모션 파일은 그래피툰의 모션 캐릭터 메뉴에 추가되어
+          드래그 앤 드롭만으로 다양한 콘텐츠를 만들 수 있습니다.
+        </span>
+        <Button
+          style={{
+            width: "190px",
+            height: "50px",
+            border: "2px solid rgba(17, 116, 237, 1)",
+            borderRadius: "3px",
+            color: "rgba(17, 116, 237, 1)",
+            fontSize: "22px",
+            fontWeight: "600",
+          }}
+        >
+          모션 캐릭터 문의
+        </Button>
+      </motion.div>
+      <motion.div
+        ref={ref}
+        style={{
+          scale: scaleProgess,
+          opacity: opacityProgress,
+        }}
         className={"character1"}
       >
         <div
@@ -259,37 +285,6 @@ export function MotionCharacter() {
             수 있습니다.
           </span>
         </div>
-      </motion.div>
-      <motion.div
-        variants={variant}
-        initial="initial"
-        ref={textRef}
-        animate={isInView && "animate"}
-        className={"motion2"}
-      >
-        <span style={{ fontSize: "60px", fontWeight: "600" }}>
-          Motion Character
-        </span>
-        <span style={{ fontSize: "30px", fontWeight: "600" }}>
-          내 캐릭터가 살아 움직인다?!
-        </span>
-        <span style={{ width: "90%", fontSize: "25px", fontWeight: "500" }}>
-          개발된 캐릭터 모션 파일은 그래피툰의 모션 캐릭터 메뉴에 추가되어
-          드래그 앤 드롭만으로 다양한 콘텐츠를 만들 수 있습니다.
-        </span>
-        <Button
-          style={{
-            width: "190px",
-            height: "50px",
-            border: "2px solid rgba(17, 116, 237, 1)",
-            borderRadius: "3px",
-            color: "rgba(17, 116, 237, 1)",
-            fontSize: "22px",
-            fontWeight: "600",
-          }}
-        >
-          모션 캐릭터 문의
-        </Button>
       </motion.div>
     </div>
   );

@@ -95,11 +95,9 @@
 }
 
 .smileIcon {
-  width: 16%;
+  width: 20%;
   display: flex;
   align-items: center;
-  gap: 11px;
-  margin-right: 17px;
 }
 
 .emoji-picker {

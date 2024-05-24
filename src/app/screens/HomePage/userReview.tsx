@@ -1,8 +1,33 @@
 import React, { useCallback, useEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+
+const container = {
+  hidden: { opacity: 0, scale: 0 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      delayChildren: 0.5,
+      staggerChildren: 0.3,
+    },
+  },
+};
+
+const item = {
+  hidden: { y: -120, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+  },
+};
 
 export function Review() {
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const observer = useRef<IntersectionObserver | null>(null);
+
+  const mainCardRef = useRef(null);
+  const isInView = useInView(mainCardRef, { once: true, margin: "-70px" });
 
   const scrollHandler = useCallback(() => {
     const scrollContainer = scrollRef.current;
@@ -54,7 +79,11 @@ export function Review() {
           alt=""
         />
       </div>
-      <div
+      <motion.div
+        ref={mainCardRef}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        variants={container}
         style={{
           display: "flex",
           flexDirection: "row",
@@ -63,7 +92,7 @@ export function Review() {
           marginTop: "2%",
         }}
       >
-        <div className="reviewCard">
+        <motion.div variants={item} className="reviewCard">
           <div
             style={{
               width: "73px",
@@ -84,8 +113,8 @@ export function Review() {
             매력적이며 기억에 남습니다!
           </span>
           <span style={{ marginLeft: "33px" }}>운영 관계자</span>
-        </div>
-        <div className="reviewCard">
+        </motion.div>
+        <motion.div variants={item} className="reviewCard">
           <div
             style={{
               width: "73px",
@@ -106,8 +135,8 @@ export function Review() {
             체험해보고 싶어요!
           </span>
           <span style={{ marginLeft: "33px" }}>ㅇㅇ초등학교 5학년 학생</span>
-        </div>
-        <div className="reviewCard">
+        </motion.div>
+        <motion.div variants={item} className="reviewCard">
           <div
             style={{
               width: "73px",
@@ -130,8 +159,8 @@ export function Review() {
           <span style={{ marginLeft: "33px" }}>
             oo초등학교 4학년 담임선생님
           </span>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
       <div className="scroll">
         <div className="scroll-content" ref={scrollRef}>
           <img src="../Icons/ribbon.png" alt="" />

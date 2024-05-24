@@ -1,41 +1,45 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { Button } from "@mui/material";
-import { useScroll, motion, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 
-const variants = {
-  initial: {
-    x: -700,
-    y: 100,
-    opacity: 0,
-  },
-  animate: {
-    x: 0,
+const container = {
+  hidden: { opacity: 0, scale: 0 },
+  visible: {
     opacity: 1,
-    y: 0,
+    scale: 1,
     transition: {
-      duration: 1.5,
-      staggerChildren: 0.1,
+      duration: 0.5,
+      delayChildren: 0.5,
+      staggerChildren: 0.3,
     },
   },
 };
+
+const item = {
+  hidden: { y: 120, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+  },
+};
+
 export function GrapCard() {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const isInView = useInView(ref, { margin: "-200px" });
+  const mainCardRef = useRef(null);
+  const isInView = useInView(mainCardRef, { once: true, margin: "-100px" });
 
   return (
-    <motion.div
-      id={"grapCard-config"}
-      variants={variants}
-      initial="initial"
-      // whileInView="animate"
-      ref={ref}
-      animate={isInView && "animate"}
-    >
+    <motion.div id={"grapCard-config"}>
       <span style={{ fontSize: "60px", fontWeight: "600", marginTop: "206px" }}>
         그래피툰의 어떤 서비스를 원하시나요?
       </span>
-      <motion.div className={" mainCard"} variants={variants}>
-        <div className={"card"}>
+      <motion.div
+        className={"mainCard"}
+        ref={mainCardRef}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        variants={container}
+      >
+        <motion.div className={"card"} variants={item}>
           <img
             style={{
               aspectRatio: "1 / 1",
@@ -57,8 +61,8 @@ export function GrapCard() {
           >
             캐릭터 모션 제작
           </span>
-        </div>
-        <div className={"card"}>
+        </motion.div>
+        <motion.div className={"card"} variants={item}>
           <img
             style={{
               aspectRatio: "1 / 1",
@@ -73,15 +77,15 @@ export function GrapCard() {
             style={{
               fontSize: "30px",
               fontWeight: "500",
-              marginRight: "39.5%",
+              marginRight: "12.5%",
               marginBottom: "5px",
               color: "white",
             }}
           >
-            교육
+            캐릭터 모션 제작
           </span>
-        </div>
-        <div className={"card"}>
+        </motion.div>
+        <motion.div className={"card"} variants={item}>
           <img
             style={{
               aspectRatio: "1 / 1",
@@ -96,15 +100,15 @@ export function GrapCard() {
             style={{
               fontSize: "30px",
               fontWeight: "500",
-              marginRight: "34.5%",
+              marginRight: "12.5%",
               marginBottom: "5px",
               color: "white",
             }}
           >
-            공모전
+            캐릭터 모션 제작
           </span>
-        </div>
-        <div className={"card"}>
+        </motion.div>
+        <motion.div className={"card"} variants={item}>
           <img
             style={{
               aspectRatio: "1 / 1",
@@ -119,16 +123,16 @@ export function GrapCard() {
             style={{
               fontSize: "30px",
               fontWeight: "500",
-              marginRight: "39.5%",
+              marginRight: "12.5%",
               marginBottom: "5px",
               color: "white",
             }}
           >
-            협업
+            캐릭터 모션 제작
           </span>
-        </div>
+        </motion.div>
       </motion.div>
-      <motion.div className={"footCard"} variants={variants}>
+      <motion.div className={"footCard"}>
         <span style={{ fontSize: "30px", fontWeight: "400" }}>
           간단한 폼 작성을 통해 문의 할 수 있습니다.{" "}
         </span>
