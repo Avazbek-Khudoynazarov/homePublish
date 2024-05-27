@@ -4,21 +4,26 @@
 
 .chat {
   position: fixed;
-  width: 40%;
-  height: 400px;
-  background: rgba(213, 238, 255, 1);
-  bottom: 24%;
-  left: 28%;
+  width: 400px;
+  height: 520px;
+  background: rgb(213, 228, 255);
+  bottom: 15%;
+  right: 8px;
   z-index: 999;
   border-radius: 12px;
 }
 
 .btnCon {
   position: fixed;
-  bottom: 4%;
-  left: 93%;
+  bottom: 3%;
+  right: 0;
   z-index: 999;
   cursor: pointer;
+}
+
+.btn {
+  border: none;
+  background: none;
 }
 
 .mainIcon {
@@ -26,15 +31,22 @@
   flex-direction: row;
   justify-content: end;
   gap: 28px;
-  margin-top: 30px;
-  margin-right: 35px;
+  padding: 20px;
 }
 
 .imgCon {
   width: 100%;
+  height: 35px;
   display: flex;
   justify-content: center;
   margin-left: 25%;
+  margin-right: -20px;
+  margin-top: 20px;
+}
+.bellIcon {
+  display: flex;
+  flex-direction: row;
+  gap: 7px;
 }
 
 .mainClose {
@@ -51,8 +63,8 @@
   justify-content: center;
   align-items: center;
   background: rgba(217, 217, 217, 0.33);
-  right: -45px;
-  top: -62px;
+  left: -40px;
+  bottom: 57.5px;
   cursor: pointer;
 }
 
@@ -66,7 +78,7 @@
 }
 
 .addIcon {
-  width: 80px;
+  width: 48px;
   height: 48px;
 
   display: flex;
@@ -98,10 +110,13 @@
   width: 20%;
   display: flex;
   align-items: center;
+  gap: 5px;
 }
 
-.emoji-picker {
+.emoji-picker2 {
   position: absolute;
-  right: -400px;
-  top: 0;
+  width: 250px;
+  height: 300px;
+  bottom: 135px;
+  left: -355px;
 }

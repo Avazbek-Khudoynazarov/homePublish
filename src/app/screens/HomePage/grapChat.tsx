@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Button, styled, Input } from "@mui/material";
+import { Button, Input } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import Picker from "@emoji-mart/react";
@@ -49,33 +50,31 @@ export function GrapChat() {
           >
             <div className="mainIcon">
               <div className="imgCon">
+                <img src="../Icons/logo2.png" alt="" />
+              </div>
+              <div className={"bellIcon"}>
                 <img
-                  style={{ marginRight: "10%" }}
-                  src="../Icons/logo2.png"
+                  style={{
+                    aspectRatio: "1/1",
+                    width: "30px",
+                    height: "30px",
+                    cursor: "pointer",
+                  }}
+                  src="../Icons/notifications.png"
+                  alt=""
+                />
+                <img
+                  style={{
+                    aspectRatio: "1/1",
+                    width: "22px",
+                    height: "22px",
+                    marginTop: "3px",
+                    cursor: "pointer",
+                  }}
+                  src="../Icons/Vector3.png"
                   alt=""
                 />
               </div>
-              <img
-                style={{
-                  aspectRatio: "1/1",
-                  width: "30px",
-                  height: "30px",
-                  cursor: "pointer",
-                }}
-                src="../Icons/notifications.png"
-                alt=""
-              />
-              <img
-                style={{
-                  aspectRatio: "1/1",
-                  width: "22px",
-                  height: "22px",
-                  marginTop: "3px",
-                  cursor: "pointer",
-                }}
-                src="../Icons/Vector3.png"
-                alt=""
-              />
             </div>
             <div className="mainClose">
               <div className="closeIcon">
@@ -110,39 +109,56 @@ export function GrapChat() {
                 <Input
                   className="input"
                   disableUnderline={true}
-                  placeholder="Please Wait ..."
+                  placeholder="Please Write here ..."
                   value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
+                  onChange={(e: {
+                    target: { value: React.SetStateAction<string> };
+                  }) => setInputValue(e.target.value)}
                 />
                 <div className="smileIcon">
-                  <Button
-                    style={{ borderRadius: "50%" }}
+                  <button
+                    style={{
+                      borderRadius: "50%",
+                      height: "25px",
+                      maxWidth: "40px",
+                      border: "none",
+                    }}
                     onClick={() => setIsPickerVisible(!isPickerVisible)}
                   >
                     {isPickerVisible ? (
-                      <CloseIcon style={{ cursor: "pointer" }} />
+                      <CloseIcon
+                        style={{
+                          cursor: "pointer",
+                          color: "rgba(17, 116, 237, 1)",
+                        }}
+                      />
                     ) : (
                       <img
-                        style={{ cursor: "pointer" }}
+                        style={{
+                          cursor: "pointer",
+                          width: "23px",
+                        }}
                         src="../Icons/Vector4.png"
                         alt="smile icon"
                       />
                     )}
-                  </Button>
+                  </button>
                   <img
                     style={{
                       cursor: "pointer",
                       aspectRatio: "1/1",
-                      width: "10px",
-                      height: "30px",
+                      width: "8px",
+                      height: "24px",
                     }}
                     src="../Icons/Vector5.png"
                     alt="option icon"
                   />
                 </div>
                 {isPickerVisible && (
-                  <div className="emoji-picker">
+                  <div className="emoji-picker2">
                     <Picker
+                      showPreview={false}
+                      showSkinTones={false}
                       data={data}
                       previewPosition="none"
                       onEmojiSelect={handleEmojiSelect}
@@ -155,13 +171,19 @@ export function GrapChat() {
         )}
       </AnimatePresence>
       <div className="btnCon">
-        <Button
+        <button
           className="btn"
           style={{ borderRadius: "50%" }}
           onClick={toggleChat}
         >
-          <img src="../Icons/grapIcon.png" alt="Chat Icon" />
-        </Button>
+          {!open && (
+            <img
+              style={{ cursor: "pointer" }}
+              src="../Icons/grapIcon.png"
+              alt="Chat Icon"
+            />
+          )}
+        </button>
       </div>
     </div>
   );

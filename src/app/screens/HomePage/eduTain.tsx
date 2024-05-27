@@ -66,7 +66,8 @@ export function EduTain() {
           className={"eduTitle"}
         >
           <span style={{ fontSize: "55px", fontWeight: "600" }}>
-            에듀테인먼트 프로그램
+            <motion.b whileHover={{ color: "blue" }}>에듀테인먼트</motion.b>{" "}
+            <motion.b whileHover={{ color: "orange" }}>프로그램</motion.b>
           </span>
           <span
             style={{
@@ -118,7 +119,13 @@ export function EduTain() {
           className={"eduTitle"}
         >
           <span style={{ fontSize: "55px", fontWeight: "600" }}>
-            다양한 콘텐츠 제작
+            <motion.b whileHover={{ color: "rgb(109, 109, 109)" }}>
+              다양한
+            </motion.b>{" "}
+            <motion.b whileHover={{ color: "rgb(76, 138, 254)" }}>
+              콘텐츠
+            </motion.b>{" "}
+            <motion.b whileHover={{ color: "orange" }}>제작</motion.b>
           </span>
           <span
             style={{

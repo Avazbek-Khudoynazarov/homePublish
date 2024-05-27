@@ -28,9 +28,9 @@ function App() {
         <NavbarHome />
         <EduTain />
         <MotionDrawing />
+        <GrapCard />
         <MotionCharacter />
         <Graphytoon />
-        <GrapCard />
         <Review />
         <Footer />
         <GrapChat />
