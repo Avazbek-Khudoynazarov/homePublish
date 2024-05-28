@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Button, Input } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
@@ -11,6 +11,7 @@ export function GrapChat() {
   const [open, setOpen] = useState(false);
   const [isPickerVisible, setIsPickerVisible] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [reloadKey, setReloadKey] = useState(0);
 
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
@@ -26,17 +27,25 @@ export function GrapChat() {
 
   const toggleChat = () => {
     setOpen(!open);
+    if (!open) {
+      setInputValue("");
+      setIsPickerVisible(false);
+    }
   };
 
   const handleEmojiSelect = (emoji: { native: string }) => {
     setInputValue((prev) => prev + emoji.native);
   };
 
-  const variants = {
-    open: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-    closed: { opacity: 0, y: "100%", transition: { duration: 0.5 } },
+  const handleReset = () => {
+    setReloadKey((prevKey) => prevKey + 1);
+    setOpen(false);
   };
 
+  const variants = {
+    open: { opacity: 1, x: 0, transition: { duration: 0.5 } },
+    closed: { opacity: 0, x: "100%", transition: { duration: 0.5 } },
+  };
   return (
     <div className="chat-config">
       <AnimatePresence>
@@ -178,7 +187,9 @@ export function GrapChat() {
         >
           {!open && (
             <img
-              style={{ cursor: "pointer" }}
+              style={{
+                cursor: "pointer",
+              }}
               src="../Icons/grapIcon.png"
               alt="Chat Icon"
             />
